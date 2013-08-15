@@ -6,8 +6,6 @@ import re
 import yaml
 import json
 
-result = {'name': 'titanium'}
-
 def get_js_type(type):
 	# print 'Processing {0}'.format(type)
 	if isinstance(type, basestring):
@@ -102,22 +100,31 @@ def read_yaml_file(file):
 
 	f.close()
 
+# Check console args.
 if len(sys.argv) < 3:
 	print 'Usage: {0} <yaml_dir> <output_file>'.format(sys.argv[0])
 	exit(1)
 
-start_dir = sys.argv[1]
-destination_file = sys.argv[2]
+yaml_dir = sys.argv[1]
+output_file = sys.argv[2]
 
-for root, dir, files in os.walk(start_dir):
+result = {
+	# Module name.
+	'name': 'titanium',
+	
+	# Make a global Ti alias to Titanium.
+	'Ti': {
+		'!proto': 'Titanium'
+	}
+}
+
+# Enumerate all files in yaml_dir.
+for root, dir, files in os.walk(yaml_dir):
 	for file in files:
 		if file.endswith('.yml'):
 			read_yaml_file(os.path.join(root, file))
 
-# Make a global Ti alias to Titanium.
-result['Ti'] = {'!proto': 'Titanium'}
-
-print 'Writing result to {0}'.format(destination_file)
-f = open(destination_file, 'w')
+print 'Writing result to {0}'.format(output_file)
+f = open(output_file, 'w')
 f.write(json.dumps(result, indent=4, separators=(',', ': ')))
 f.close()
