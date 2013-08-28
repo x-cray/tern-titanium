@@ -38,9 +38,11 @@ def get_fn_type(method_dict):
 def fill_properties(properties, dict):
 	for property in properties:
 		prop_descriptor = {}
+		prop_type = None
 		if property.has_key('summary'):
 			prop_descriptor['!doc'] = property['summary']
-		prop_type = get_js_type(property['type'])
+		if property.has_key('type'):
+			prop_type = get_js_type(property['type'])
 		if prop_type:
 			prop_descriptor['!type'] = prop_type
 		dict[property['name']] = prop_descriptor
