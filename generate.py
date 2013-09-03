@@ -69,7 +69,7 @@ def parse_yaml_doc(doc, result):
 	sections = doc_name.split('.')
 	last_section = None
 
-	# Generate objects hierarchy.
+	# Generate namespace hierarchy.
 	for section in sections:
 		last_section = section
 		if section == 'Global':
@@ -83,6 +83,7 @@ def parse_yaml_doc(doc, result):
 
 	# Generate summary, properties and methods documentation.
 	curr_dict['!doc'] = doc['summary']
+	curr_dict['!url'] = 'http://docs.appcelerator.com/titanium/latest/#!/api/%s' % doc_name
 
 	prototype_dict = None
 	if not 'extends' in doc or doc['extends'] == 'Titanium.Module':
