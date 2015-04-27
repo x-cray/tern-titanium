@@ -130,7 +130,7 @@ output_file = sys.argv[2]
 # Result stub.
 result = {
 	# Module name.
-	'name': 'titanium',
+	'!name': 'titanium',
 	'Titanium': {
 		'UI': { }
 	},
